@@ -17,4 +17,5 @@ dependencies = [
 dev = [
     "ipykernel>=7.1.0",
     "nbconvert>=7.16.6",
+    "papermill>=2.6.0",
 ]

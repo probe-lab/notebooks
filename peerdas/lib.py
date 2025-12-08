@@ -26,6 +26,37 @@ DEFAULT_NETWORK = "mainnet"
 DATA_DIR = Path(__file__).parent / "data"
 
 
+def get_date_filter(target_date: str | None = None, column: str = "slot_start_date_time") -> str:
+    """Generate SQL date filter for a specific date or the previous day.
+
+    Args:
+        target_date: Date string in YYYY-MM-DD format, or None for yesterday
+        column: The datetime column to filter on (default: slot_start_date_time)
+
+    Returns:
+        SQL WHERE clause fragment for filtering by date
+    """
+    if target_date is None:
+        yesterday = datetime.now(timezone.utc).date() - timedelta(days=1)
+        target_date = yesterday.strftime("%Y-%m-%d")
+    return f"{column} >= '{target_date}' AND {column} < '{target_date}'::date + INTERVAL 1 DAY"
+
+
+def get_cache_suffix(target_date: str | None = None) -> str:
+    """Get cache file suffix based on target date.
+
+    Args:
+        target_date: Date string in YYYY-MM-DD format, or None for yesterday
+
+    Returns:
+        Suffix string for cache file naming
+    """
+    if target_date is None:
+        yesterday = datetime.now(timezone.utc).date() - timedelta(days=1)
+        target_date = yesterday.strftime("%Y-%m-%d")
+    return f"_{target_date}"
+
+
 def get_time_range(hours: int = DEFAULT_HOURS) -> tuple[datetime, datetime]:
     """Get start and end times for analysis period."""
     end_time = datetime.now(timezone.utc)
