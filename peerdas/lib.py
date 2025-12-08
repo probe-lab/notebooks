@@ -133,17 +133,3 @@ def get_client_optional():
     )
 
 
-# =============================================================================
-# PLOTLY WITH STATIC FALLBACK
-# =============================================================================
-def show_fig(fig, scale: float = 1.0) -> None:
-    """Display a Plotly figure as static PNG for GitHub rendering.
-
-    Args:
-        fig: Plotly figure object
-        scale: Image scale factor for higher resolution (default 1.0)
-    """
-    from IPython.display import display, Image
-
-    img_bytes = fig.to_image(format="png", scale=scale)
-    display(Image(img_bytes))

@@ -10,12 +10,11 @@ dependencies = [
     "altair>=5.0",
     "numpy>=1.26",
     "python-dotenv>=1.0",
-    "nbconvert>=7.16.6",
     "pyarrow>=22.0.0",
-    "kaleido>=1.2.0",
 ]
 
 [dependency-groups]
 dev = [
     "ipykernel>=7.1.0",
+    "nbconvert>=7.16.6",
 ]
