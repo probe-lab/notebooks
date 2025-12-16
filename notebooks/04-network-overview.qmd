@@ -1,0 +1,17 @@
+---
+tittle: "Network Overview"
+---
+
+Analysis script to compute the overall network overview from the Xatu sentry nodes on Ethereum mainnet.
+
+```{python}
+#| tags: [parameters]
+target_date = None  # Set via papermill, or auto-detect from manifest
+```
+
+```{python}
+import polars as pl
+import plotly.express as px
+
+from loaders import load_parquet
+```
