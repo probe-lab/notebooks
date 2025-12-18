@@ -13,7 +13,7 @@ from queries.blob_inclusion import (
 from queries.blob_flow import fetch_proposer_blobs
 from queries.column_propagation import fetch_col_first_seen, NUM_COLUMNS
 from queries.network_overview import (
-    fetch_unique_network_participants_per_client,
+    fetch_xatu_client_connectivity,
 )
 
 __all__ = [
@@ -28,5 +28,5 @@ __all__ = [
     "fetch_col_first_seen",
     "NUM_COLUMNS",
     # Network overview
-    "fetch_unique_network_participants_per_client",
+    "fetch_xatu_client_connectivity",
 ]

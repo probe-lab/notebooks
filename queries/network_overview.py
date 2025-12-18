@@ -12,13 +12,14 @@ def _get_date_filter(target_date: str, column: str = "slot_start_date_time") -> 
     return f"{column} BETWEEN '{target_date}' AND '{target_date}'::date + INTERVAL 1 DAY"
 
 
-def fetch_unique_network_participants_per_client(
+def fetch_xatu_client_connectivity(
     client,
     target_date: str,
     output_path: Path,
     network: str = "mainnet",
 ) -> int:
-    """Fetch blobs per slot data and write to Parquet.
+    """Fetch the unique number of peer_ids know using the gossipsub synthetic_heartbeat
+     data and write to Parquet.
 
     Returns row count.
     """
@@ -28,12 +29,16 @@ def fetch_unique_network_participants_per_client(
 SELECT
     toStartOfInterval(event_date_time, INTERVAL 1 hour) AS hour_bucket,
     remote_peer_id_unique_key as peer_id,
+    remote_protocol as protocol,
+    remote_transport_protocol as transport_protocol,
+    remote_port as port,
     remote_agent_implementation as client_name,
-    meta_client_name as local_name
-FROM libp2p_synthetic_heartbeat_local
+    meta_client_name as local_name,
+    remote_geo_country_code as geo_country_code
+FROM libp2p_connected_local
 WHERE
-    meta_network_name LIKE 'mainnet'
-  AND {date_filter}
+    meta_network_name LIKE '{network}'
+    AND {date_filter}
 ORDER BY hour_bucket ASC
 """
 
